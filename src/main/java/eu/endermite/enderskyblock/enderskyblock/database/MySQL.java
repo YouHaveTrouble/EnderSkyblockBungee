@@ -4,10 +4,11 @@ import eu.endermite.enderskyblock.enderskyblock.EnderSkyblock;
 import eu.endermite.enderskyblock.enderskyblock.debug.Debug;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class MySQL {
 
-    public static Connection connection;
+    private static Connection connection;
 
     final static String host = EnderSkyblock.getConfig().getMysqlHost();
     final static String password = EnderSkyblock.getConfig().getMysqlPassword();
@@ -37,15 +38,21 @@ public class MySQL {
             return false;
         }
     }
+    public static void stopConnection() {
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     /**
-     *
-     * @param uuid Player's UUID in string
+     * @param uuid Player's UUID
      * @return boolean that reflects uuids existance in database
      */
-    public static boolean checkIfPlayerExists(String uuid) {
+    public static boolean checkIfPlayerExists(UUID uuid) {
         try {
-            String sql = "SELECT * FROM players WHERE player_uuid='" + uuid + "';";
+            String sql = "SELECT * FROM players WHERE player_uuid='" + uuid.toString() + "';";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -57,7 +64,6 @@ public class MySQL {
             return false;
         }
         return false;
-
     }
 
     /**
@@ -71,7 +77,20 @@ public class MySQL {
                     "island_uuid VARCHAR(36));";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.executeUpdate();
-            Debug.debugMessage("Successfully created database tables");
+            sql = "CREATE TABLE IF NOT EXISTS server_data(" +
+                    "server_type VARCHAR(36) NOT NULL," +
+                    "server_bungee_name VARCHAR(256) NOT NULL," +
+                    "islands_loaded VARCHAR(36));";
+            stmt = connection.prepareStatement(sql);
+            stmt.executeUpdate();
+            sql = "CREATE TABLE IF NOT EXISTS worlds_data(" +
+                    "world_name VARCHAR(128) NOT NULL," +
+                    "owner_uuid VARCHAR(36) NOT NULL," +
+                    "loaded_on VARCHAR(256));";
+            stmt = connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+            Debug.debugMessage("Successfully initialised database tables");
             return true;
         } catch (SQLException e) {
             Debug.debugMessage("Something went wrong with creating database tables.", e);

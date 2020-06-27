@@ -1,8 +1,10 @@
 package eu.endermite.enderskyblock.enderskyblock.loadbalancer;
 
 import eu.endermite.enderskyblock.enderskyblock.EnderSkyblock;
+import io.netty.util.NettyRuntime;
 import net.md_5.bungee.api.config.ServerInfo;
 
+import java.io.*;
 import java.util.HashMap;
 
 public class LoadBalancer {
@@ -15,9 +17,14 @@ public class LoadBalancer {
 
         HashMap<ServerInfo,Integer> loadHashMap = new HashMap<>();
         for (ServerInfo s : EnderSkyblock.getPlugin().getProxy().getServers().values()) {
+
+
+
             int worldsLoaded = 0;
 
             //TODO ping every server for the amount of worlds loaded
+
+
 
             loadHashMap.put(s, worldsLoaded);
         }
