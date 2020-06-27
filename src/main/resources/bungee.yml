@@ -1,0 +1,5 @@
+name: EnderSkyblock
+version: ${project.version}
+main: eu.endermite.enderskyblock.enderskyblock.EnderSkyblock
+description: First ever fully scalable bungee skyblock plugin
+author: YouHaveTrouble

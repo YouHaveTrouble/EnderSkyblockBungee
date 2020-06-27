@@ -1,0 +1,11 @@
+debug: true
+storage:
+  # Storage method. For now only MySQL.
+  method: MySQL
+  mysql:
+    host: "localhost"
+    database: "skyblock"
+    username: "user"
+    password: "password"
+    port: 3306
+    ssl: true
