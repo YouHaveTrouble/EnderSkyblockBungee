@@ -1,7 +1,5 @@
 debug: true
 storage:
-  # Storage method. For now only MySQL.
-  method: MySQL
   mysql:
     host: "localhost"
     database: "skyblock"
@@ -9,3 +7,8 @@ storage:
     password: "password"
     port: 3306
     ssl: true
+  redis:
+    endpoint: "localhost"
+    auth: true
+    password: ""
+    port: 6379

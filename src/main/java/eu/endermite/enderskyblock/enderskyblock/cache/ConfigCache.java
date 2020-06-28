@@ -14,6 +14,11 @@ public class ConfigCache {
     String mysqlPassword;
     int mysqlPort;
     boolean mysqlSsl;
+    String redisEndpoint;
+    int redisPort;
+    String redisUser;
+    String redisPassword;
+    boolean redisAuth;
 
     public ConfigCache() {
         // Debug status
@@ -25,6 +30,12 @@ public class ConfigCache {
             mysqlPassword = config.getString("storage.mysql.password");
             mysqlPort = config.getInt("storage.mysql.port");
             mysqlSsl = config.getBoolean("storage.mysql.ssl");
+        // Redis information
+            redisEndpoint = config.getString("storage.redis.endpoint");
+            redisPort = config.getInt("storage.redis.port");
+            redisAuth = config.getBoolean("storage.redis.auth");
+            redisUser = config.getString("storage.redis.username");
+            redisPassword = config.getString("storage.redis.password");
 
     }
 
@@ -49,4 +60,13 @@ public class ConfigCache {
     public boolean getMysqlSsl() {
         return mysqlSsl;
     }
+    public String getRedisEndpoint() {
+        return redisEndpoint;
+    }
+    public int getRedisPort() {
+        return redisPort;
+    }
+    public boolean getRedisAuth() {return redisAuth;}
+    public String getRedisUser() {return redisUser;}
+    public String getRedisPassword() {return redisPassword;}
 }

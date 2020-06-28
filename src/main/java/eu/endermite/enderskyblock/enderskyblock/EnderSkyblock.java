@@ -3,7 +3,11 @@ package eu.endermite.enderskyblock.enderskyblock;
 import eu.endermite.enderskyblock.enderskyblock.cache.ConfigCache;
 import eu.endermite.enderskyblock.enderskyblock.config.ConfigManager;
 import eu.endermite.enderskyblock.enderskyblock.database.MySQL;
+import eu.endermite.enderskyblock.enderskyblock.database.Redis;
 import net.md_5.bungee.api.plugin.Plugin;
+import redis.clients.jedis.Jedis;
+
+import java.util.List;
 
 public final class EnderSkyblock extends Plugin {
 
@@ -13,6 +17,9 @@ public final class EnderSkyblock extends Plugin {
     private static ConfigCache config;
     public static ConfigCache getConfig() {return config;}
 
+    private static Redis redis;
+    public static Redis getRedis() {return redis;}
+
     @Override
     public void onEnable() {
         this.getLogger().info("Enabling...");
@@ -21,12 +28,22 @@ public final class EnderSkyblock extends Plugin {
         ConfigManager.saveDefault("config.yml");
         config = new ConfigCache();
 
-        // conecting to the database
+        // Database stuff
         if (!MySQL.startConnection())
             this.getProxy().stop("EnderSkyblock cannot work without access to a database!");
 
         if (!MySQL.createTables())
             this.getProxy().stop("EnderSkyblock cannot work without access to a database!");
+
+        redis = new Redis();
+
+        getRedis().connect();
+        Jedis jedis = getRedis().getConnection();
+        List<String> list = jedis.lrange("tutorial-list", 0 ,5);
+
+        for(int i = 0; i<list.size(); i++) {
+            System.out.println("Stored string in redis:: "+list.get(i));
+        }
 
     }
 
