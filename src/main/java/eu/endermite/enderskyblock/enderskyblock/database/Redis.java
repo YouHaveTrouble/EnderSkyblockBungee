@@ -6,7 +6,7 @@ import redis.clients.jedis.Jedis;
 
 public class Redis {
 
-    Jedis jedis;
+    private Jedis jedis;
 
     public void connect() {
         ConfigCache config = EnderSkyblock.getConfig();

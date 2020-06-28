@@ -12,3 +12,4 @@ EnderSkyblock requires
 
 <p>There are probably a lot of bugs that may or may not be fixed. I created this purely as of proof of concept and do not currently plan to support if long-term.
 
+![Java CI with Maven](https://github.com/YouHaveTrouble/EnderSkyblockBungee/workflows/Java%20CI%20with%20Maven/badge.svg)
