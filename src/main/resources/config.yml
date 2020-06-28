@@ -9,6 +9,6 @@ storage:
     ssl: true
   redis:
     endpoint: "localhost"
-    auth: true
+    auth: false
     password: ""
     port: 6379

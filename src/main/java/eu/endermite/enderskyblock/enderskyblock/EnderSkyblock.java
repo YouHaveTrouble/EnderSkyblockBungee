@@ -36,14 +36,7 @@ public final class EnderSkyblock extends Plugin {
             this.getProxy().stop("EnderSkyblock cannot work without access to a database!");
 
         redis = new Redis();
-
         getRedis().connect();
-        Jedis jedis = getRedis().getConnection();
-        List<String> list = jedis.lrange("tutorial-list", 0 ,5);
-
-        for(int i = 0; i<list.size(); i++) {
-            System.out.println("Stored string in redis:: "+list.get(i));
-        }
 
     }
 
@@ -51,5 +44,6 @@ public final class EnderSkyblock extends Plugin {
     @Override
     public void onDisable() {
         MySQL.stopConnection();
+        getRedis().getConnection().close();
     }
 }
